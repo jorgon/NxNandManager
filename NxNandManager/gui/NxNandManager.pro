@@ -180,7 +180,7 @@ INCLUDEPATH += $${OPENSSL_LIB_PATH}/include
 DEPENDPATH += $${OPENSSL_LIB_PATH}/include
 
 win32:!win32-g++: LIBS += $${OPENSSL_LIB_PATH}/lib/crypto.lib
-else:win32-g++: LIBS += $${OPENSSL_LIB_PATH}/lib/libcrypto.a
+else:win32-g++: LIBS += -llibcrypto.a
 
 DISTFILES += \
     images/explorer.png
