@@ -172,13 +172,15 @@ CONFIG(ARCH64) {
 
 INCLUDEPATH += $$PWD/../virtual_fs/dokan/include
 DEPENDPATH += $$PWD/../virtual_fs/dokan/include
+DEPENDPATH += /mingw64/qt5-static/lib
+
 
 win32: LIBS += -L$${OPENSSL_LIB_PATH}/lib/ -lcrypto
 INCLUDEPATH += $${OPENSSL_LIB_PATH}/include
 DEPENDPATH += $${OPENSSL_LIB_PATH}/include
 
-win32:!win32-g++: PRE_TARGETDEPS += $${OPENSSL_LIB_PATH}/lib/crypto.lib
-else:win32-g++: PRE_TARGETDEPS += $${OPENSSL_LIB_PATH}/lib/libcrypto.a
+win32:!win32-g++: LIBS += $${OPENSSL_LIB_PATH}/lib/crypto.lib
+else:win32-g++: LIBS += $${OPENSSL_LIB_PATH}/lib/libcrypto.a
 
 DISTFILES += \
     images/explorer.png
