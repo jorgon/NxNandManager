@@ -186,5 +186,5 @@ DISTFILES += \
     images/explorer.png
 
 
-QMAKE_CXXFLAGS_RELEASE  += -Wunused-variable
-QMAKE_CXXFLAGS_RELEASE  += -Wunused-function
+QMAKE_CXXFLAGS_RELEASE  -= -Wunused-variable
+QMAKE_CXXFLAGS_RELEASE  -= -Wunused-function
