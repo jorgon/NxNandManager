@@ -172,7 +172,7 @@ CONFIG(ARCH64) {
 
 INCLUDEPATH += $$PWD/../virtual_fs/dokan/include
 DEPENDPATH += $$PWD/../virtual_fs/dokan/include
-DEPENDPATH += /mingw64/qt5-static/lib
+LIBS += -L$$PWD/../../../../../mingw64/qt5-static/lib
 
 
 win32: LIBS += -L$${OPENSSL_LIB_PATH}/lib/ -lcrypto
