@@ -184,3 +184,7 @@ else:win32-g++: LIBS += -llibcrypto.a
 
 DISTFILES += \
     images/explorer.png
+
+
+QMAKE_CXXFLAGS_RELEASE  += -Wunused-variable
+QMAKE_CXXFLAGS_RELEASE  += -Wunused-function
