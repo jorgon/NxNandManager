@@ -118,7 +118,7 @@ void MountDialog::on_mountButton_clicked()
         if (ui->virtualNxaCheckBox->isChecked())
             options |= VirtualNXA;
 
-        QtConcurrent::run(m_nxp, &NxPartition::mount_vfs, true, mount_point, options, nullptr);
+        QtConcurrent::run(&NxPartition::mount_vfs, m_nxp, true, mount_point, options, nullptr);
     }
 }
 

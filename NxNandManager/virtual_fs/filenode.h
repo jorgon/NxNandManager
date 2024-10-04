@@ -46,11 +46,13 @@ THE SOFTWARE.
 class NxFile;
 #ifndef byte
     typedef unsigned char byte;
+#else
+//using namespace std;
 #endif
 namespace virtual_fs {
 
 struct security_informations : std::mutex {
-  std::unique_ptr<byte[]> descriptor = nullptr;
+    std::unique_ptr<std::byte[]> descriptor = 0;//nullptr;
   DWORD descriptor_size = 0;
 
   security_informations() = default;
@@ -61,7 +63,7 @@ struct security_informations : std::mutex {
     if (!securitydescriptor) return;
     descriptor_size = GetSecurityDescriptorLength(securitydescriptor);
     //descriptor = boost::make_unique<byte[]>(descriptor_size);
-    descriptor = std::unique_ptr<byte[]>(new byte[descriptor_size]);
+    descriptor = std::unique_ptr<std::byte[]>(new std::byte[descriptor_size]);
     memcpy(descriptor.get(), securitydescriptor, descriptor_size);
   }
 };

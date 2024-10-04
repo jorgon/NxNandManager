@@ -887,7 +887,7 @@ void Explorer::concurrentSlotWithProgressDlg(void (Explorer::*functor)(CpyQueue)
     connect(this, &Explorer::sendProgress, &progressDialog, &Progress::updateProgress);
     connect(this, &Explorer::workFinished, &progressDialog, &Progress::on_WorkFinished);
     connect(&m_hactool, &HacToolNet::consoleWrite, &progressDialog, &Progress::consoleWrite);
-    QtConcurrent::run(this, functor, queue);
+    QtConcurrent::run(functor,this,  queue);
     progressDialog.exec();
     disconnect(&m_hactool, &HacToolNet::consoleWrite, &progressDialog, &Progress::consoleWrite);
 }
@@ -1032,7 +1032,7 @@ void Explorer::on_currentDir_combo_currentIndexChanged(int index)
         ui->tableView->resizeRowsToContents();
         ui->currentDir_combo->setEnabled(true);        
     });
-    future = QtConcurrent::run(this, &Explorer::readDir, true);
+    future = QtConcurrent::run(&Explorer::readDir, this, true);
     watcher->setFuture(future);
 }
 
@@ -1052,7 +1052,7 @@ void Explorer::save(NxFileList selectedFiles)
 
     QFutureWatcher<void> watcher;
     connect(&watcher, &QFutureWatcher<void>::finished, &progressDialog, &Progress::on_WorkFinished);
-    QFuture<void> future = QtConcurrent::run(this, &Explorer::do_copy, queue);
+    QFuture<void> future = QtConcurrent::run(&Explorer::do_copy, this, queue);
     watcher.setFuture(future);
     if (isdebug) dbg_printf("Explorer::save() selection count: %d, exec progress dialog\n", selectedFiles.count());
     progressDialog.exec();

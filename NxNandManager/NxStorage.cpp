@@ -311,6 +311,7 @@ void NxStorage::constructor(const wstring &storage)
         for (NxPart part : NxPartArr)
         {
             std::string p_name(part.name);
+            //std::wstring p_name(p_namet.begin(), p_namet.end());
             std::transform(p_name.begin(), p_name.end(), p_name.begin(), ::toupper);
 
             if (!basename.compare(p_name))

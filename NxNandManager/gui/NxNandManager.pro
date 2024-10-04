@@ -21,7 +21,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-CONFIG += c++11
+CONFIG += c++17
 CONFIG += console
 CONFIG += static create_prl link_prl
 CONFIG += object_parallel_to_source
@@ -152,27 +152,32 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     application.qrc
 
-QT += winextras
+#QT += winextras
 
 RC_FILE = NxNandManager.rc
 
 CONFIG(ARCH32) {
     DEFINES += ARCH32
     #OPENSSL PATH
+    #OPENSSL_LIB_PATH = C:/Users/pvollweiler/src/OpenSSL_mingw32
     OPENSSL_LIB_PATH = $$PWD/../../../OpenSSL_mingw32
+    #OPENSSL_LIB_PATH = $$PWD/../../../../../OpenSSL_mingw32
     LIBS += -L$$PWD/../virtual_fs/dokan/x86/lib/ -ldokan1
 
 }
 CONFIG(ARCH64) {
     DEFINES += ARCH64
     #OPENSSL PATH
+    #OPENSSL_LIB_PATH = C:/Users/pvollweiler/src/OpenSSL_mingw64
     OPENSSL_LIB_PATH = $$PWD/../../../OpenSSL_mingw64
+    #OPENSSL_LIB_PATH = $$PWD/../../../../../OpenSSL_mingw64
     LIBS += -L$$PWD/../virtual_fs/dokan/x64/lib/ -ldokan1
 }
 
 INCLUDEPATH += $$PWD/../virtual_fs/dokan/include
 DEPENDPATH += $$PWD/../virtual_fs/dokan/include
 LIBS += -L$$PWD/../../../../../mingw64/qt5-static/lib
+LIBS += -L$$PWD/../../../../../mingw64/lib
 
 
 win32: LIBS += -L$${OPENSSL_LIB_PATH}/lib/ -lcrypto
@@ -180,11 +185,19 @@ INCLUDEPATH += $${OPENSSL_LIB_PATH}/include
 DEPENDPATH += $${OPENSSL_LIB_PATH}/include
 
 win32:!win32-g++: LIBS += $${OPENSSL_LIB_PATH}/lib/crypto.lib
-else:win32-g++: LIBS += -llibcrypto.a
+else:win32-g++: LIBS += -lcrypto
+
+#LIBS += -lzstd
+#LIBS += -lz
+QMAKE_PRL_LIBS -= -llibzstd.a
+QMAKE_PRL_LIBS_FOR_CMAKE -= -llibzstd.a
 
 DISTFILES += \
     images/explorer.png
 
 
-QMAKE_CFLAGS  -= -Wunused-variable
-QMAKE_CFLAGS  -= -Wunused-function
+QMAKE_CFLAGS  -= -Wno-unused-variable
+QMAKE_CFLAGS  -= -Wno-unused-function
+
+QMAKE_CXXFLAGS  -= -Wno-unused-variable
+QMAKE_CXXFLAGS  -= -Wno-unused-function

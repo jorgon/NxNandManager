@@ -61,7 +61,7 @@ QString FileDialog(QWidget *parent, fdMode mode, const QString& defaultName, con
     }
     else if (mode == save_to_dir)
     {
-        fd.setFileMode(QFileDialog::DirectoryOnly);
+        fd.setFileMode(QFileDialog::Directory);
         if(!fd.exec())
             return "";
         filePath = fd.selectedFiles().at(0);
@@ -144,7 +144,7 @@ NxTitleDB::NxTitleDB(const QString &json_file, const QString &update_url, int de
     connect(resource, &Resource::update_complete, this, &NxTitleDB::populate_titles);
     connect(this, &NxTitleDB::update_signal, resource, &Resource::updateFromUrl);
 
-    QtConcurrent::run(this, &NxTitleDB::populate_titles);
+    QtConcurrent::run(&NxTitleDB::populate_titles, this);
 }
 NxTitleDB::~NxTitleDB()
 {
@@ -426,7 +426,7 @@ void VfsMountRunner::run(const QString &YesNoQuestion)
     });
 
 
-    QtConcurrent::run(m_partition, &NxPartition::mount_vfs, true, m_mount_point, m_readOnly ? ReadOnly | VirtualNXA : VirtualNXA, nullptr);
+    QtConcurrent::run(&NxPartition::mount_vfs, m_partition, true, m_mount_point, m_readOnly ? ReadOnly | VirtualNXA : VirtualNXA, nullptr);
 }
 QString rtrimmed(const QString& str) {
   int n = str.size() - 1;
@@ -436,4 +436,19 @@ QString rtrimmed(const QString& str) {
     }
   }
   return "";
+}
+
+
+std::string remove_extension(std::string const & filename)
+{
+    typename std::string::size_type const pmin(filename.find_last_of("/\\"));
+    typename std::string::size_type const p(filename.find_last_of('.'));
+    return p > 0 && (pmin == std::string::npos || p > pmin) && p != std::string::npos ? filename.substr(0, p) : filename;
+}
+//template<class T>
+std::wstring remove_extensionW(std::wstring const & filename)
+{
+    typename std::wstring::size_type const pmin(filename.find_last_of(L"/\\"));
+    typename std::wstring::size_type const p(filename.find_last_of(L'.'));
+    return p > 0 && (pmin == std::wstring::npos || p > pmin) && p != std::wstring::npos ? filename.substr(0, p) : filename;
 }

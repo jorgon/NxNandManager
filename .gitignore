@@ -1,0 +1,9 @@
+
+NxNandManager/gui/build/
+NxNandManager/.vs
+*.pro.user
+NxNandManager/NxNandManager/x64/
+
+NxNandManager/NxNandManager.vcxproj.user
+
+build.txt

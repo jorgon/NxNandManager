@@ -21,9 +21,9 @@ Progress::Progress(QWidget *parent, NxStorage *workingStorage) :
 
 
     auto mainWin = reinterpret_cast<MainWindow*>(parent);
-    TaskBarButton = mainWin->get_TaskBarButton();
+    /*TaskBarButton = mainWin->get_TaskBarButton();
     TaskBarProgress = TaskBarButton->progress();
-    TaskBarProgress->setVisible(true);
+    TaskBarProgress->setVisible(true);*/
 
     m_buf_time = std::chrono::system_clock::now();
     // Init timer
@@ -34,10 +34,10 @@ Progress::Progress(QWidget *parent, NxStorage *workingStorage) :
 
 Progress::~Progress()
 {
-    if (TaskBarProgress) {
+    /*if (TaskBarProgress) {
         TaskBarProgress->setValue(0);
         TaskBarProgress->setVisible(false);
-    }
+    }*/
     if (console)
         delete console;
     if (console_progress_line)
@@ -139,7 +139,7 @@ void Progress::updateProgress(const ProgressInfo pi)
         if(!pi.isSubProgressInfo)
         {
             b_simpleProgress = pi.percent == -1;
-            TaskBarProgress->setValue(0);
+            //TaskBarProgress->setValue(0);
             // First init
             if (not_in(pi.mode, {MD5_HASH, ZIP}))
             {
@@ -178,7 +178,7 @@ void Progress::updateProgress(const ProgressInfo pi)
         }
         if (!pi.isSubProgressInfo)
         {
-            TaskBarProgress->setValue(100);
+            //TaskBarProgress->setValue(100);
             setProgressBarStyle(ui->progressBar2, "CFCFCF");
             ui->progressBar2->setValue(100);
             ui->progressBar2->setFormat("");
@@ -227,7 +227,7 @@ void Progress::updateProgress(const ProgressInfo pi)
         if(!pi.isSubProgressInfo) {
             std::chrono::duration<double> remaining_seconds = (elapsed_seconds / pi.bytesCount) * (pi.bytesTotal - pi.bytesCount);
             m_remaining_time = time + remaining_seconds;
-            TaskBarProgress->setValue(percent);
+            //TaskBarProgress->setValue(percent);
         }
         b_done = false;
     }
@@ -272,12 +272,12 @@ void Progress::reject()
                 m_workingStorage->stopWork = true;
                 return;
             }
-            TaskBarProgress->setVisible(false);
+            //TaskBarProgress->setVisible(false);
             QDialog::reject();
         }
         return;
     }
-    TaskBarProgress->setVisible(false);
+    //TaskBarProgress->setVisible(false);
     QDialog::done(result());
 }
 

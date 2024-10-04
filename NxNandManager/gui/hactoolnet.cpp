@@ -34,7 +34,7 @@ void HacToolNet::process_exit(QProcess &process, std::function<void()> functor, 
                         continue;
                     }
                 }
-                else if (!line.contains('#') && !line.contains(0x8)
+                else if (!line.contains('#') && !line.contains((QChar)0x8)
                          && !line.contains("Failed to match key")
                          && !line.contains("Invalid rights ID"))
                 {

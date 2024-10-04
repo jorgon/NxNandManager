@@ -58,12 +58,12 @@ public:
     QList<NxFILCACHE_t> m_entries;
     int size() { return m_entries.count(); }
     QList<NxFile*>* at(QString dir) {
-        for (int i(0); i< size(); i++) if (&m_entries[i].dir == dir)
+        for (int i(0); i< size(); i++) if (m_entries[i].dir == dir)
             return &m_entries[i].entries;
         return nullptr;
     }
     void remove(QString dir) {
-        for (int i(0); i< size(); i++) if (&m_entries[i].dir == dir) {
+        for (int i(0); i< size(); i++) if (m_entries[i].dir == dir) {
             clearFiles(m_entries.at(i).entries);
             m_entries.removeAt(i);
         }

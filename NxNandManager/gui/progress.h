@@ -2,10 +2,10 @@
 #define PROGRESS_H
 
 #include <QDialog>
-#include <QtWinExtras>
+//#include <QtWinExtras>
 #include <QMessageBox>
 #include <QProgressBar>
-#include <QWinTaskbarProgress>
+//#include <QWinTaskbarProgress>
 #include "../NxStorage.h"
 #include <QPlainTextEdit>
 
@@ -42,8 +42,8 @@ private:
     Ui::Progress *ui;
     QWidget* m_parent = nullptr;
     NxStorage *m_workingStorage;
-    QWinTaskbarButton *TaskBarButton = nullptr;
-    QWinTaskbarProgress *TaskBarProgress = nullptr;
+    //QWinTaskbarButton *TaskBarButton = nullptr;
+    //QWinTaskbarProgress *TaskBarProgress = nullptr;
     QPlainTextEdit* console = nullptr;
     QLabel* console_progress_line = nullptr;
     bool bTaskBarSet = false;

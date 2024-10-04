@@ -23,7 +23,7 @@ jobs:
         run: |
           ln -s $(pwd) ~/NxNandManager
           cd ~/NxNandManager/NxNandManager/gui
-          /mingw64/qt5-static/bin/qmake.exe NxNandManager.pro 'CONFIG += STATIC ARCH64'
+          /mingw64/qt5-static/bin/qmake.exe NxNandManager.pro -d 'CONFIG += STATIC ARCH64'
           make -j"$(nproc)"
           mkdir -p $GITHUB_WORKSPACE/bin
           cp release/NxNandManager.exe $GITHUB_WORKSPACE/bin

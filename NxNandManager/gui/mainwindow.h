@@ -20,9 +20,8 @@
 #include <QMainWindow>
 #include <QThread>
 #include <QTimer>
-#include <QtWinExtras>
-#include <QtWinExtras>
-#include <QWinTaskbarProgress>
+//#include <QtWinExtras>
+//#include <QWinTaskbarProgress>
 #include <QTableWidgetItem>
 #include "../res/progress_info.h"
 #include "../NxStorage.h"
@@ -79,8 +78,8 @@ private:
 	bool m_ready;
     Worker* workThread = nullptr;
 	int cur_operation = 0;
-    QWinTaskbarButton *TaskBarButton = nullptr;
-	QWinTaskbarProgress *TaskBarProgress;
+    //QWinTaskbarButton *TaskBarButton = nullptr;
+    //QWinTaskbarProgress *TaskBarProgress;
     bool m_isMountOptionReadOnly = true;
 
     QIcon dumpIcon;
@@ -151,7 +150,7 @@ public slots:
     void dokanDriver_install();
 public:
     KeySet biskeys;
-    QWinTaskbarButton* get_TaskBarButton() { return TaskBarButton; }
+    //QWinTaskbarButton* get_TaskBarButton() { return TaskBarButton; }
     NxTitleDB* m_titleDB = nullptr;
     NxNcaDB* m_ncaDB = nullptr;
 

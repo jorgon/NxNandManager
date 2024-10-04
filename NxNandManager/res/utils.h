@@ -231,20 +231,10 @@ T base_nameW(T const & path, T const & delims = L"/\\")
 {
 	return path.substr(path.find_last_of(delims) + 1);
 }
-template<class T>
-T remove_extension(T const & filename)
-{
-    typename T::size_type const pmin(filename.find_last_of(L"/\\"));
-	typename T::size_type const p(filename.find_last_of('.'));
-    return p > 0 && (pmin == T::npos || p > pmin) && p != T::npos ? filename.substr(0, p) : filename;
-}
-template<class T>
-T remove_extensionW(T const & filename)
-{
-    typename T::size_type const pmin(filename.find_last_of(L"/\\"));
-	typename T::size_type const p(filename.find_last_of(L'.'));
-    return p > 0 && (pmin == T::npos || p > pmin) && p != T::npos ? filename.substr(0, p) : filename;
-}
+//template<class T>
+std::string remove_extension(std::string const & filename);
+//template<class T>
+std::wstring remove_extensionW(std::wstring const & filename);
 template<class T>
 T get_extension(T const & filename)
 {

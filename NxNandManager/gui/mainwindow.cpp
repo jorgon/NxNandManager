@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
     unmountIcon = QIcon(":/images/unmount.png");
     explorerIcon = QIcon(":/images/explorer.png");
 
-    TaskBarButton = new QWinTaskbarButton(this);
+    //TaskBarButton = new QWinTaskbarButton(this);
 
     //setFixedWidth(380);
     //setFixedHeight(490);
@@ -150,7 +150,7 @@ MainWindow::~MainWindow()
         ui->partition_table->removeAction(action);
         delete action;
     }
-    delete TaskBarButton;
+    //delete TaskBarButton;
 	delete ui;
     if (workThread)
         delete workThread;
@@ -166,8 +166,8 @@ void MainWindow::showEvent(QShowEvent *e)
 {
 	if(!bTaskBarSet)
 	{
-		TaskBarButton->setWindow(windowHandle());
-		TaskBarProgress = TaskBarButton->progress();
+        //TaskBarButton->setWindow(windowHandle());
+        //TaskBarProgress = TaskBarButton->progress();
         bTaskBarSet = true;
 	}
 	e->accept();
@@ -1412,7 +1412,7 @@ void MainWindow::on_mountParition(int nx_type, const wchar_t &mount_point)
 
         emit this->on_partition_table_itemSelectionChanged();
     });
-    QtConcurrent::run(nxp, &NxPartition::mount_vfs, true, mount_point, m_isMountOptionReadOnly ? ReadOnly : VirtualNXA, nullptr);
+    QtConcurrent::run(&NxPartition::mount_vfs, nxp, true, mount_point, m_isMountOptionReadOnly ? ReadOnly : VirtualNXA, nullptr);
 
 }
 
