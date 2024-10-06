@@ -1,7 +1,7 @@
 
 #ifndef __NxNandManager_h__
 #define __NxNandManager_h__
-
+#include <windows.h>
 #include "gui/gui.h"
 #if defined(ENABLE_GUI)
 #include "gui/mainwindow.h"
@@ -9,7 +9,7 @@
 #include <QtCore>
 #endif
 
-#include <windows.h>
+
 #include <winioctl.h>
 #include <stdio.h>
 #include <ctime>

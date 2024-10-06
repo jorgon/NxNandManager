@@ -7,3 +7,7 @@ NxNandManager/NxNandManager/x64/
 NxNandManager/NxNandManager.vcxproj.user
 
 build.txt
+
+build/
+
+.vscode/settings.json
