@@ -11,3 +11,5 @@ build.txt
 build/
 
 .vscode/settings.json
+
+NxNandManager/cmake-build-debug

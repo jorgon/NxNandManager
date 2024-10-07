@@ -72,12 +72,12 @@ void printStorageInfo(NxStorage *storage)
 
     if (storage->type == INVALID && is_dir(c_path))
         printf("File/Disk      : Directory");
-    else 
+    else
         printf("File/Disk      : %s", storage->isDrive() ? "Disk" : "File");
     if (storage->type == RAWMMC)
         printf(" [0x%s - 0x%s]\n", n2hexstr((u64)storage->mmc_b0_lba_start * NX_BLOCKSIZE, 10).c_str(), n2hexstr((u64)storage->mmc_b0_lba_start * NX_BLOCKSIZE + storage->size() - 1, 10).c_str());
     else printf("\n");
-    if(storage->type != INVALID) 
+    if(storage->type != INVALID)
     {
         printf("Size           : %s", GetReadableSize(storage->size()).c_str());
         if(storage->isSinglePartType() && storage->getNxPartition()->freeSpace)
@@ -105,7 +105,7 @@ void printStorageInfo(NxStorage *storage)
         printf("Firmware ver.  : %s\n", storage->getFirmwareVersion().c_str());
         if (nullptr != storage->getNxPartition(SYSTEM)) printf("ExFat driver   : %s\n", storage->exFat_driver ? "Detected" : "Undetected");
     }
-    
+
     // TODO
     //if (strlen(storage->last_boot) > 0)
     //    printf("Last boot      : %s\n", storage->last_boot);
@@ -185,7 +185,7 @@ void printProgress(ProgressInfo pi)
             GetReadableSize(pi.bytesCount).c_str(), GetReadableSize(pi.bytesTotal).c_str(), pi.bytesCount * 100 / pi.bytesTotal);
         if (elapsed_seconds) printf(" - Remaining time: %s             \r", buf.c_str());
         else printf("                                          \r");
-    }    
+    }
 }
 
 int main(int argc, char *argv[])
@@ -374,7 +374,7 @@ int main(int argc, char *argv[])
 
         else if (!strncmp(currArg, PARTITION_ARGUMENT, array_countof(PARTITION_ARGUMENT) - 1))
         {
-            u32 len = array_countof(PARTITION_ARGUMENT) - 1;            
+            u32 len = array_countof(PARTITION_ARGUMENT) - 1;
             if (currArg[len] == '=')
                 partitions = &currArg[len + 1];
             else if (currArg[len] == 0 && i == argc - 1)
@@ -518,12 +518,12 @@ int main(int argc, char *argv[])
     printf("Accessing input...\r");
     NxStorage nx_input = NxStorage(input);
     printf("                      \r");
-   
+
     if (nx_input.type == INVALID)
     {
         if (nx_input.isDrive())
             throwException(ERR_INVALID_INPUT, "Failed to open input disk. Make sure to run this program as an administrator.");
-        else 
+        else
             throwException("Failed to open input : %s", (void*)input);
     }
 
@@ -560,7 +560,7 @@ int main(int argc, char *argv[])
     }
 
     // Input specific actions
-    // 
+    //
     if (cryptoCheck)
     {
         if (!nx_input.isEncrypted())
@@ -614,7 +614,7 @@ int main(int argc, char *argv[])
 
         if (!nx_input.setAutoRcm(autoRCM))
             throwException("Failed to apply autoRCM!");
-        else 
+        else
             printf("autoRCM %s\n", autoRCM ? "enabled" : "disabled");
     }
     //
@@ -622,8 +622,8 @@ int main(int argc, char *argv[])
     {
         NxPartition *cal0 = nx_input.getNxPartition(PRODINFO);
         if (nullptr == cal0)
-            throwException("Cannot apply Incognito to input type %s\n" 
-                "Incognito can only be applied to input types \"RAWNAND\", \"FULL NAND\" or \"PRODINFO\"\n", 
+            throwException("Cannot apply Incognito to input type %s\n"
+                "Incognito can only be applied to input types \"RAWNAND\", \"FULL NAND\" or \"PRODINFO\"\n",
                 (void*)nx_input.getNxTypeAsStr());
 
         bool do_backup = true;
@@ -655,11 +655,11 @@ int main(int argc, char *argv[])
 
         printf("Incognito successfully applied to input\n");
     }
-  
+
     if (info)
     {
         printf("\n -- INPUT -- \n");
-        printStorageInfo(&nx_input); 
+        printStorageInfo(&nx_input);
     }
 
     if (mount)
@@ -704,7 +704,7 @@ int main(int argc, char *argv[])
         int ent = v_fs.populate();
         if(ent < 0)
             throwException(ERR_FAILED_TO_POPULATE_VFS);
-        printf("Virtual fs populated (%d entries found).\n", ent);                
+        printf("Virtual fs populated (%d entries found).\n", ent);
 
         auto callback = [](NTSTATUS status) {
             if (status == DOKAN_SUCCESS)
@@ -845,19 +845,19 @@ int main(int argc, char *argv[])
         catch (...) {
             throwException("-user_resize invalid value");
         }
-        
+
         if (new_size % 64) {
             new_size = (new_size / 64 + 1) * 64;
             ///printf("-user_resize new value is %d (aligned to 64Mb)\n");
         }
-        
+
         u32 user_new_size = new_size * 0x800; // Size in sectors. 1Mb = 0x800 sectores
         u64 user_min = (u64)user_new_size * 0x200 / 1024 / 1024;
         u32 min_size = (u32)((user->size() - user->freeSpace) / 0x200); // 0x20000 = size for 1 cluster in FAT
         u64 min = FORMAT_USER ? 64 : (u64)min_size * 0x200 / 1024 / 1024;
         if (min % 64) min = (min / 64) * 64 + 64;
 
-        if (user_min < min) 
+        if (user_min < min)
               throwException("-user_resize mininmum value is %I64d (%s)", (void *)min, (void*)GetReadableSize((u64)min * 1024 * 1024).c_str());
 
         if (info)
@@ -910,7 +910,7 @@ int main(int argc, char *argv[])
     // Output is unknown disk
     if (nx_output.type == INVALID && nx_output.isDrive())
         throwException("Output is an unknown drive/disk!");
-    
+
     // No partition provided
     if (!strlen(l_partitions))
     {
@@ -921,14 +921,14 @@ int main(int argc, char *argv[])
             for (NxPartition *in_part : nx_input.partitions)
             {
                 NxPartition *out_part = nx_output.getNxPartition(in_part->type());
-                if (is_dir(output) || (nullptr != out_part && in_part->size() <= out_part->size())) 
+                if (is_dir(output) || (nullptr != out_part && in_part->size() <= out_part->size()))
                 {
                     strcat(l_partitions, ",");
                     strcat(l_partitions, in_part->partitionName().c_str());
                 }
             }
         }
-        
+
         // If no partition in copy list -> full dump or restore
         if (!strlen(l_partitions))
         {
@@ -1006,7 +1006,7 @@ int main(int argc, char *argv[])
                 // Prevent restoring decrypted partition to native encrypted partitions
                 if (is_in(nx_output.type, { RAWNAND, RAWMMC }) && out_part->nxPart_info.isEncrypted &&
                     (decrypt || (!encrypt && !in_part->isEncryptedPartition())))
-                    throwException("Cannot restore decrypted partition %s to NxStorage type %s ", 
+                    throwException("Cannot restore decrypted partition %s to NxStorage type %s ",
                         (void*) in_part->partitionName().c_str(), (void*)nx_output.getNxTypeAsStr());
             }
         }
@@ -1037,15 +1037,15 @@ int main(int argc, char *argv[])
             printf("WARNING : GPT & GPT backup will not be overwritten in output. NO RAW RESTORE, ONLY PARTITIONS\n");
     }
 
-    if (info)        
+    if (info)
         throwException("--info argument provided, exit (remove arg from command to perform dump/restore operation).\n");
 
     // Prevent system from going into sleep mode
     SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_AWAYMODE_REQUIRED);
-    
+
     ///
     /// Dump to new file
-    ///    
+    ///
     if (!nx_output.isNxStorage())
     {
         // Release output handle
@@ -1092,7 +1092,7 @@ int main(int argc, char *argv[])
         }
         // Dump one or several partitions (-part is provided)
         else
-        {           
+        {
             // Check if file already exists
             int i = 0;
             std::vector<int> indexes;
@@ -1105,7 +1105,7 @@ int main(int argc, char *argv[])
                 if (is_file(new_out))
                 {
                     if (!FORCE && !AskYesNoQuestion("The following output file already exists :\n- %s\nDo you want to overwrite it ?", (void*)new_out))
-                    {                        
+                    {
                         if (!v_partitions.size())
                             throwException("Operation canceled");
 
@@ -1123,8 +1123,8 @@ int main(int argc, char *argv[])
             // Delete partitions user wants to keep from copy list
             for(int i : indexes)
                 v_partitions.erase(v_partitions.begin() + i);
-            
-            // Copy each partition            
+
+            // Copy each partition
             for (const char *part_name : v_partitions)
             {
                 NxPartition *partition = nx_input.getNxPartition(part_name);
@@ -1133,7 +1133,7 @@ int main(int argc, char *argv[])
                 if ((encrypt && !partition->isEncryptedPartition()) && partition->nxPart_info.isEncrypted ||
                     (decrypt && partition->isEncryptedPartition()))
                     crypto_mode = encrypt ? ENCRYPT : DECRYPT;
-                else 
+                else
                     crypto_mode = BYPASS_MD5SUM ? NO_CRYPTO : MD5_HASH;
 
                 char new_out[MAX_PATH];
@@ -1187,11 +1187,11 @@ int main(int argc, char *argv[])
         {
             std::string parts;
             for (const char *part_name : v_partitions) parts.append("- ").append(part_name).append("\n");
-            if (!FORCE && !AskYesNoQuestion("The following partition%s will be restored :\n%sAre you sure you want to continue ?", 
+            if (!FORCE && !AskYesNoQuestion("The following partition%s will be restored :\n%sAre you sure you want to continue ?",
                 v_partitions.size() > 1 ? (void*)"s" : (void*)"", (void*)parts.c_str()))
                 throwException("Operation cancelled");
 
-            // Copy each partition            
+            // Copy each partition
             for (const char *part_name : v_partitions)
             {
                 NxPartition *in_part = nx_input.getNxPartition(part_name);
